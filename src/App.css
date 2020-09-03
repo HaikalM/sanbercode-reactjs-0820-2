@@ -36,3 +36,43 @@
     transform: rotate(360deg);
   }
 }
+.card-container{
+	width: 450px;
+	padding: 50px;
+	border: 1px #000 solid;
+	border-radius: 10px;
+}
+
+.text-center{
+	text-align: center;
+}
+
+.form-group{
+	display: flex;
+	padding: 10px 0;
+}
+
+.form-group .form-label{
+	min-width: 170px;
+}
+
+.checkbox-group{
+	display: block;
+}
+
+.vertical-align-end{
+	align-self: flex-end;
+}
+
+.btn{
+	padding: 5px 10px;
+}
+
+.btn-rounded{
+	border-radius: 20px;
+}
+
+.btn-white{
+	background-color: white;
+}
+
