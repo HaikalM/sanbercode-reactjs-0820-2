@@ -22,7 +22,8 @@ class Timer extends React.Component{
 	tick(){
 		this.timeFormat()
 		this.setState({
-			count: this.state.count + 1
+			count: this.state.count + 1,
+			time: new Date(),
 		})
 	}
 
