@@ -18,7 +18,7 @@ class ListForm extends Component{
 			inputBeratBuah: '',
 			index: -1
 		}
-		this.handleSubmit = this.handleSubmit.bind(this)
+		//this.handleSubmit = this.handleSubmit.bind(this)
 	}
 
 	handleChangeNamaBuah = (event) => {
@@ -42,19 +42,21 @@ class ListForm extends Component{
 		})
 	}
 
-	handleSubmit(event){
+	handleSubmit = (event) => {
 		event.preventDefault()
 		let index = this.state.index
 		let inputNama = this.state.inputNamaBuah
 		let inputHarga = this.state.inputHargaBuah
 		let inputBerat = this.state.inputBeratBuah
 		if(index === -1){
-			this.setState({
-				listDataBuah: [...this.state.listDataBuah, {nama: inputNama, harga: inputHarga, berat: inputBerat}],
-				inputNamaBuah: '',
-				inputHargaBuah: '',
-				inputBeratBuah: ''
-			})
+			if(inputNama != '' && inputHarga != '' && inputBerat != ''){
+				this.setState({
+					listDataBuah: [...this.state.listDataBuah, {nama: inputNama, harga: inputHarga, berat: inputBerat}],
+					inputNamaBuah: '',
+					inputHargaBuah: '',
+					inputBeratBuah: ''
+				})
+			}
 		}else{
 			let dataBuah = this.state.listDataBuah
 			let selectedBuah = dataBuah[index]

@@ -4,14 +4,12 @@ import './App.css';
 import FormComponent from './Tugas-9'
 import TableComponent from './Tugas-10'
 import Timer from './Tugas-11/Timer.js'
-import ListForm from './Tugas-12/ListForm.js'
+import ListForm from './Tugas-13/Hooks.js'
 
 function App() {
   return (
 		<>
 			<ListForm />
-			//<Timer />
-			//<TableComponent />
 		</>
   );
 }
