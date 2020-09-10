@@ -1,4 +1,5 @@
 import React, {Component, useState, useEffect} from 'react'
+import axios from 'axios'
 
 var daftarHargaBuah = [
 	{nama: 'Semangka', harga: 10000, berat: 1000},
@@ -9,12 +10,23 @@ var daftarHargaBuah = [
 ]
 
 const ListForm = () => {
-	const [listDataBuah, setListDataBuah] = useState(daftarHargaBuah)
+	const [listDataBuah, setListDataBuah] = useState(null)
 	const [inputNamaBuah, setInputNamaBuah] = useState('')
 	const [inputHargaBuah, setInputHargaBuah] = useState('')
 	const [inputBeratBuah, setInputBeratBuah] = useState('')
 
-	const [indeksBuah, setIndeksBuah] = useState(-1)
+	const [indeksBuah, setIndeksBuah] = useState(null)
+
+  useEffect( () => {
+		if(listDataBuah === null){
+			axios.get(`http://backendexample.sanbercloud.com/api/fruits`)
+			.then(res => {
+				console.log(res)
+				setListDataBuah(res.data)
+				// lakukan pengolahan data
+			})
+		}
+  })
 
 	const handleChangeNamaBuah = (event) => {
 		let value = event.target.value
@@ -32,21 +44,31 @@ const ListForm = () => {
 	}
 
 	const handleEdit = (event) => {
-		let indeksBuah = event.target.value
-		let selectedBuah = listDataBuah[indeksBuah]
+		let indeksBuah = parseInt(event.target.value)
+		//let selectedBuah = listDataBuah[indeksBuah]
+		let selectedBuah = listDataBuah.find(item => item.id === indeksBuah)
 
-		setInputNamaBuah(selectedBuah.nama)
-		setInputHargaBuah(selectedBuah.harga)
-		setInputBeratBuah(selectedBuah.berat)
+		console.log(selectedBuah)
+		setInputNamaBuah(selectedBuah.name)
+		setInputHargaBuah(selectedBuah.price)
+		setInputBeratBuah(selectedBuah.weight)
+
 		setIndeksBuah(indeksBuah)
 	}
 
 	const handleDestroy = (event) => {
-		let indeksBuah = event.target.value
-		let dataBuah = listDataBuah
-		dataBuah.splice(indeksBuah, 1)
+		let indeksBuah = parseInt(event.target.value)
+		//let dataBuah = listDataBuah
+		//dataBuah.splice(indeksBuah, 1)
+		axios.delete(`http://backendexample.sanbercloud.com/api/contestants/${indeksBuah}`)
+		.then(res => {
+			let newListDataBuah = listDataBuah.filter(x => x.id !== indeksBuah)
+			setListDataBuah([...newListDataBuah])
+			console.log(res);
+			console.log(res.data);
+		})
 
-		setListDataBuah([...dataBuah])
+		setListDataBuah([...listDataBuah])
 	}
 
 	const handleSubmit = (event) => {
@@ -54,31 +76,48 @@ const ListForm = () => {
 		let inputNama = inputNamaBuah
 		let inputHarga = inputHargaBuah
 		let inputBerat = inputBeratBuah
-		if(indeksBuah === -1){
-			if(inputNama != '' && inputHarga != '' && inputBerat != ''){
-				setListDataBuah([...listDataBuah, {nama: inputNama, harga: inputHarga, berat: inputBerat}])
-				setInputNamaBuah('')
-				setInputHargaBuah('')
-				setInputBeratBuah('')
-			}
+		if(indeksBuah === null){
+			axios.post(`http://backendexample.sanbercloud.com/api/fruits`, { name: inputNamaBuah, price: inputHargaBuah, weight: inputBeratBuah })
+				.then(res => {
+					let data = res.data
+					setListDataBuah([...listDataBuah, {id: data.id, name: data.name, price: data.price, weight: data.weight}])
+					console.log(res)
+					// lakukan handle ketika sukses
+				})
 		}else{
-			let dataBuah = listDataBuah
-			let selectedBuah = dataBuah[indeksBuah]
-			if(inputNama !== ''){
-				selectedBuah.nama = inputNama
-			}
-			if(inputHarga !== ''){
-				selectedBuah.harga = inputHarga
-			}
-			if(inputBerat !== ''){
-				selectedBuah.berat = inputBerat
-			}
-
-			setListDataBuah([...dataBuah])
+			let newListDataBuah = listDataBuah.map(item => {
+				if (item.id === indeksBuah){
+					item.name = inputNamaBuah
+					item.price = inputHargaBuah
+					item.weight = inputBeratBuah
+				}
+				return item
+			})
+			axios.put(`http://backendexample.sanbercloud.com/api/fruits/${indeksBuah}`, { name: inputNamaBuah, price: inputHargaBuah, weight: inputBeratBuah })
+			.then(res => {
+				console.log(res)
+				console.log(listDataBuah)
+				setListDataBuah(newListDataBuah)
+				// lakukan handle ketika sukses
+			})
 			setInputNamaBuah('')
 			setInputHargaBuah('')
 			setInputBeratBuah('')
-			setIndeksBuah(-1)
+			setIndeksBuah(null)
+			//let dataBuah = listDataBuah
+			//let selectedBuah = listDataBuah.filter(x => x.id !== indeksBuah)
+
+			//if(inputNama !== ''){
+				//selectedBuah.name = inputNama
+			//}
+			//if(inputHarga !== ''){
+				//selectedBuah.price = inputHarga
+			//}
+			//if(inputBerat !== ''){
+				//selectedBuah.weight = inputBerat
+			//}
+
+			//setListDataBuah([...dataBuah])
 		}
 	}
 
@@ -88,6 +127,7 @@ const ListForm = () => {
 			<table border="1" width="100%" className="table-custom">
 				<thead style={{background: '#aaa'}}>
 					<tr>
+						<th>No.</th>
 						<th>Nama</th>
 						<th>Harga</th>
 						<th>Berat</th>
@@ -95,15 +135,16 @@ const ListForm = () => {
 					</tr>
 				</thead>
 				<tbody style={{background: '#ff7f50'}}>
-					{listDataBuah.map((data, indeksBuah)=>{
+					{listDataBuah !== null && listDataBuah.map((item, index)=>{
 						return(
-							<tr key={indeksBuah}>
-								<td>{data.nama}</td>
-								<td>{data.harga}</td>
-								<td>{data.berat/1000} Kg</td>
+							<tr key={item.id}>
+								<td>{index+1}</td>
+								<td>{item.name}</td>
+								<td>{item.price}</td>
+								<td>{item.weight/1000} Kg</td>
 								<td>
-									<button value={indeksBuah} onClick={handleEdit} style={{marginRight: '5px'}}>Edit</button>
-									<button value={indeksBuah} onClick={handleDestroy}>Delete</button>
+									<button value={item.id} onClick={handleEdit} style={{marginRight: '5px'}}>Edit</button>
+									<button value={item.id} onClick={handleDestroy}>Delete</button>
 								</td>
 							</tr>
 						)
