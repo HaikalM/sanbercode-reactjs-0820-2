@@ -13,8 +13,8 @@ const ListForm = () => {
 	const [inputNamaBuah, setInputNamaBuah] = useState('')
 	const [inputHargaBuah, setInputHargaBuah] = useState('')
 	const [inputBeratBuah, setInputBeratBuah] = useState('')
-	const [index, setIndex] = useState(-1)
-	const [teksTombol, setTeksTombol] = useState('Tambah')
+
+	const [indeksBuah, setIndeksBuah] = useState(-1)
 
 	const handleChangeNamaBuah = (event) => {
 		let value = event.target.value
@@ -32,29 +32,29 @@ const ListForm = () => {
 	}
 
 	const handleEdit = (event) => {
-		let index = event.target.value
-		let selectedBuah = listDataBuah[index]
+		let indeksBuah = event.target.value
+		let selectedBuah = listDataBuah[indeksBuah]
 
 		setInputNamaBuah(selectedBuah.nama)
 		setInputHargaBuah(selectedBuah.harga)
 		setInputBeratBuah(selectedBuah.berat)
+		setIndeksBuah(indeksBuah)
 	}
 
 	const handleDestroy = (event) => {
-		let index = event.target.value
+		let indeksBuah = event.target.value
 		let dataBuah = listDataBuah
-		dataBuah.splice(index, 1)
+		dataBuah.splice(indeksBuah, 1)
 
 		setListDataBuah([...dataBuah])
 	}
 
 	const handleSubmit = (event) => {
 		event.preventDefault()
-		let index = index
 		let inputNama = inputNamaBuah
 		let inputHarga = inputHargaBuah
 		let inputBerat = inputBeratBuah
-		if(index === -1){
+		if(indeksBuah === -1){
 			if(inputNama != '' && inputHarga != '' && inputBerat != ''){
 				setListDataBuah([...listDataBuah, {nama: inputNama, harga: inputHarga, berat: inputBerat}])
 				setInputNamaBuah('')
@@ -63,7 +63,7 @@ const ListForm = () => {
 			}
 		}else{
 			let dataBuah = listDataBuah
-			let selectedBuah = dataBuah[index]
+			let selectedBuah = dataBuah[indeksBuah]
 			if(inputNama !== ''){
 				selectedBuah.nama = inputNama
 			}
@@ -78,7 +78,7 @@ const ListForm = () => {
 			setInputNamaBuah('')
 			setInputHargaBuah('')
 			setInputBeratBuah('')
-			setIndex(-1)
+			setIndeksBuah(-1)
 		}
 	}
 
@@ -95,15 +95,15 @@ const ListForm = () => {
 					</tr>
 				</thead>
 				<tbody style={{background: '#ff7f50'}}>
-					{listDataBuah.map((data, index)=>{
+					{listDataBuah.map((data, indeksBuah)=>{
 						return(
-							<tr key={index}>
+							<tr key={indeksBuah}>
 								<td>{data.nama}</td>
 								<td>{data.harga}</td>
 								<td>{data.berat/1000} Kg</td>
 								<td>
-									<button value={index} onClick={handleEdit} style={{marginRight: '5px'}}>Edit</button>
-									<button value={index} onClick={handleDestroy}>Delete</button>
+									<button value={indeksBuah} onClick={handleEdit} style={{marginRight: '5px'}}>Edit</button>
+									<button value={indeksBuah} onClick={handleDestroy}>Delete</button>
 								</td>
 							</tr>
 						)
@@ -142,7 +142,6 @@ const ListForm = () => {
 				<div className="form-group">
 					<button
 						type="submit"
-						value={teksTombol}
 						className="btn btn-white btn-rounded">Kirim</button>
 				</div>
 			</form>
