@@ -27,7 +27,7 @@ header {
 	max-height: 60px;
 }
 
-header.white-mode{
+header.light-mode{
 	background: white;
 	box-shadow: 0 10px 20px rgb(0,0,0,0.05);
 }
@@ -51,7 +51,7 @@ header nav a {
 	color: #666;
 }
 
-header.white-mode nav a {
+header.light-mode nav a {
 	color: #666;
 }
 
@@ -71,15 +71,15 @@ header nav a:visited {
 	font-weight: 600;
 }
 
-header.white-mode nav a:hover {
+header.light-mode nav a:hover {
 	color: #444;
 }
 
-header.white-mode nav a:active {
+header.light-mode nav a:active {
 	color: #444;
 }
 
-header.white-mode nav a:visited {
+header.light-mode nav a:visited {
 	color: #444;
 }
 
@@ -141,14 +141,14 @@ header .toggle-menu{
 	border-radius: 5px;
 }
 
-.btn .white-mode{
+.btn.dark-mode{
 	background-color: #555;
 	color: #fff;
 	border-color: #555;
 	box-shadow: 2px 4px 5px rgb(0,0,0,0.1)
 }
 
-.btn .dark-mode{
+.btn.light-mode{
 	background-color: #fff;
 	color: #555;
 	border-color: #fff;

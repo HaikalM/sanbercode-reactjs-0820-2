@@ -8,7 +8,7 @@ const Nav = () => {
 
 	useEffect( () => {
 		if(backgroundMode == 'dark-mode'){
-			setBtnMode('white-mode')
+			setBtnMode('light-mode')
 		}else{
 			setBtnMode('dark-mode')
 		}
@@ -35,7 +35,7 @@ const Nav = () => {
 				</nav>
 				<div className="toggle-menu">
 					<button className={'btn '+ btnMode} onClick={handleBackground} value={btnMode}>
-						{backgroundMode}
+						{btnMode}
 					</button>
 				</div>
 			</header>
