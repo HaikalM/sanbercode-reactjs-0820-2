@@ -1,15 +1,25 @@
-import React, {useState, useContext} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import {Link} from 'react-router-dom'
 import {DataContext} from './DataContext'
 
 const Nav = () => {
 	const [backgroundMode, setBackgroundMode] = useContext(DataContext)
+	const [btnMode, setBtnMode] = useState('')
+
+	useEffect( () => {
+		if(backgroundMode == 'dark-mode'){
+			setBtnMode('white-mode')
+		}else{
+			setBtnMode('dark-mode')
+		}
+  })
 
 	const handleBackground = (event) => {
 		let backgroundColor = event.target.value
 		setBackgroundMode(backgroundColor)
 		console.log(backgroundMode)
 	}
+
 	return(
 		<>
 			<header className={backgroundMode}>
@@ -24,7 +34,7 @@ const Nav = () => {
 					</ul>
 				</nav>
 				<div className="toggle-menu">
-					<button className={'btn '+ backgroundMode} onClick={handleBackground} value='white-mode'>
+					<button className={'btn '+ btnMode} onClick={handleBackground} value={btnMode}>
 						{backgroundMode}
 					</button>
 				</div>
