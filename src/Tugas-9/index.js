@@ -7,7 +7,7 @@ function FormComponent(){
 			<form action="#" className="form-container">
 				<div className="form-group">
 					<div className="form-label">
-						<label for="nama-pelanggan" for="nama-pelanggan">Nama Pelanggan</label>
+						<label htmlFor="nama-pelanggan" htmlFor="nama-pelanggan">Nama Pelanggan</label>
 					</div>
 					<div>
 						<input className="form-input" name="nama-pelanggan" />
@@ -15,28 +15,28 @@ function FormComponent(){
 				</div>
 				<div className="form-group">
 					<div className="form-label vertical-align-end">
-						<label className="position-bottom" for="daftar-item">Daftar Item</label>
+						<label className="position-bottom" htmlFor="daftar-item">Daftar Item</label>
 					</div>
 					<div>
 						<div className="checkbox-group" id="daftar-item">
 							<input type="checkbox" className="form-input" id="item1" name="item1" value="semangka" />
-							<label for="item1">Semangka</label>
+							<label htmlFor="item1">Semangka</label>
 						</div>
 						<div className="checkbox-group">
 							<input type="checkbox" className="form-input" id="item2" name="item2" value="jeruk" />
-							<label for="item2">Jeruk</label>
+							<label htmlFor="item2">Jeruk</label>
 						</div>
 						<div className="checkbox-group">
 							<input type="checkbox" className="form-input" id="item3" name="item3" value="nanas" />
-							<label for="item3">Nanas</label>
+							<label htmlFor="item3">Nanas</label>
 						</div>
 						<div className="checkbox-group">
 							<input type="checkbox" className="form-input" id="item4" name="item4" value="salak" />
-							<label for="item4">Salak</label>
+							<label htmlFor="item4">Salak</label>
 						</div>
 						<div className="checkbox-group">
 							<input type="checkbox" className="form-input" id="item5" name="item5" value="anggur" />
-							<label for="item5">Anggur</label>
+							<label htmlFor="item5">Anggur</label>
 						</div>
 					</div>
 				</div>
